@@ -15,6 +15,9 @@
           v-bind:increment="increment"
           v-bind:index="index"
           v-bind:previous="previous"
+          v-bind:numCorrect="numCorrect"
+          v-bind:numTotal="numTotal"
+          v-bind:update="update"
           />
         </b-col>
       </b-row>
@@ -53,6 +56,9 @@ export default {
     },
     previous(){
       this.index--;
+    },
+    update(){
+      location.reload();
     }
   },
   mounted: function(){

@@ -1,5 +1,5 @@
 <template>
-  <div class="QuestionBoxContainer">
+  <div v-if="index<10" class="QuestionBoxContainer">
     <b-jumbotron lead="Bootstrap v4 Components for Vue.js 2">
       <!-- <template v-slot:lead>{{currQuestion.question}}</template> -->
       <template v-slot:lead><span v-html="currQuestion.question"></span></template>
@@ -24,8 +24,24 @@
       v-bind:disabled="selectedIndex===null || answered"
       >
       Submit</b-button>
-      <b-button variant="success" href="#" @click="next">Next</b-button>
+      <b-button variant="success" href="#" 
+      v-bind:disabled="!answered"
+      @click="next">
+      Next</b-button>
 
+    </b-jumbotron>
+  </div>
+  <div v-else>
+    <br>
+        <b-jumbotron lead="Bootstrap v4 Components for Vue.js 2">
+      <!-- <template v-slot:lead>{{currQuestion.question}}</template> -->
+      <template v-slot:lead>You got {{(numCorrect/numTotal)*100}}% Correct! </template>
+      <hr class="my-4" />
+
+      <b-button variant="primary" 
+      v-on:click="update"
+      >
+      Restart</b-button>
     </b-jumbotron>
   </div>
 </template>
@@ -39,14 +55,17 @@ export default {
     next: Function,
     increment:Function,
     previous: Function,
-    index: Number
+    index: Number,
+    numCorrect: Number,
+    numTotal: Number,
+    update: Function
   },
   data: function(){
     return{
       selectedIndex: null,
       shuffledAnswers:[],
       correctIndex: null,
-      answered: false,
+      answered: false
     }
   },
   watch: {
